@@ -1,14 +1,13 @@
-FROM python:3.13-slim
+FROM public.ecr.aws/lambda/python:3.11
 
-WORKDIR /app
+# Copy requirements.txt
+COPY requirements.txt ${LAMBDA_TASK_ROOT}
 
-# Upgrade system packages to address vulnerabilities
-RUN apt-get update && apt-get upgrade -y && apt-get clean
+# Install the specified packages
+RUN pip install -r requirements.txt
 
-COPY requirements.txt .
+# Copy function code
+COPY lambda_function.py ${LAMBDA_TASK_ROOT}
 
-RUN pip install --no-cache-dir -r requirements.txt
-
-COPY app.py .
-
-CMD ["python", "app.py"]
+# Set the CMD to your handler (could also be done as a parameter override outside of the Dockerfile)
+CMD [ "lambda_function.handler" ]
