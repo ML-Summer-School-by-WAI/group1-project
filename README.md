@@ -1,5 +1,6 @@
 # group1-project
-ML Project from Group 1
+ML Project from Group 1. 1
+
 
 ### Push docker image to Amazon ECR
 ```bash 
